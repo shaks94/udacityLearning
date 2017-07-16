@@ -1,0 +1,5 @@
+*.xml
+!spec/*.xml
+.DS_Store
+*.iml
+!spec/*.iml
