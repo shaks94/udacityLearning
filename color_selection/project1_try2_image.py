@@ -4,8 +4,7 @@ import numpy as np
 import cv2
 import os
 
-% matplotlib
-inline
+
 import math
 
 dir = os.listdir("test_images/")
