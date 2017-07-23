@@ -42,10 +42,13 @@ min_line_length =40
 max_line_gap=20
 line_image = np.copy(image)*0
 print("line_image")
-plt.imshow(line_image)
 plt.show()
+
 lines = cv2.HoughLinesP(masked_edges, rho, theta, threshold, np.array([]),
                             min_line_length, max_line_gap)
+
+plt.imshow(line_image)
+
 print("lines",lines.size)
 for line in lines:
     for x1,y1,x2,y2 in line:
