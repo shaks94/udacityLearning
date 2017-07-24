@@ -9,7 +9,7 @@ import math
 
 dir = os.listdir("test_images/")
 
-image = mpimg.imread("test_images/" + dir[1])
+image = mpimg.imread("test_images/" + dir[2])
 
 
 def grayscale(img):

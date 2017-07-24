@@ -56,6 +56,7 @@ for line in lines:
 
 color_edges = np.dstack((edges, edges, edges))
 
+
 lines_edges = cv2.addWeighted(color_edges, .0, line_image, 10, 10)
 print("line_edges1")
 plt.imshow(lines_edges)

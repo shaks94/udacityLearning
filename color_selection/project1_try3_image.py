@@ -100,6 +100,7 @@ def weighted_img(img, initial_img, α=.8, β=1., λ=0.):
 
     The result image is computed as follows:
 
+
     initial_img * α + img * β + λ
     NOTE: initial_img and img must be the same shape!
     """
@@ -107,18 +108,19 @@ def weighted_img(img, initial_img, α=.8, β=1., λ=0.):
 
 
 def output(i_index):
-    #     print(i)
+    print(i)
     print(dir[i_index])
     image = mpimg.imread("test_images/" + dir[i_index])
 
     #     print("norma Image")
-    plt.imshow(image)
-    plt.show()
+    # plt.imshow(image)
+
+    # plt.show()
 
     gray = grayscale(image)
-    #     print("gray Image")
-    #     plt.imshow(gray,cmap="gray")
-    #     plt.show()
+    # print("gray Image")
+    # plt.imshow(gray,cmap="gray")
+    # plt.show()
 
 
     blur_gray = gaussian_blur(image, 3)
@@ -127,10 +129,10 @@ def output(i_index):
     #     plt.show()
 
     edges = canny(blur_gray, 50, 150)
-    #     print("edges")
-    #     print(edges.size)
-    #     plt.imshow(edges,cmap="gray")
-    #     plt.show()
+    # print("edges")
+    # print(edges.size)
+    # plt.imshow(edges,cmap="gray")
+    # plt.show()
 
     imshape = image.shape
     vertices = np.array([[(90, imshape[0]), (450, 320), (550, 320
@@ -138,10 +140,10 @@ def output(i_index):
 
     masked_edges = region_of_interest(edges, vertices)
 
-    #     print("region")
-    #     print(masked_edges.size)
-    #     plt.imshow(masked_edges,cmap="gray")
-    #     plt.show()
+    # print("region")
+    # print(masked_edges.size)
+    # plt.imshow(masked_edges,cmap="gray")
+    # plt.show()
 
     rho = 2
     theta = np.pi / 180
@@ -150,17 +152,24 @@ def output(i_index):
     max_line_gap = 20
     lines = hough_lines(masked_edges, rho, theta, threshold, min_line_len=40, max_line_gap=20)
 
-    #     print("lines")
-    #     print(lines.size)
-    #     plt.imshow(lines)
-    #     plt.show()
+    # print("lines")
+    # print(lines.size)
+    # plt.imshow(lines)
+    #
+    # plt.show()
 
     color_edges = np.dstack((edges, edges, edges))
+    plt.imshow(color_edges)
 
-    line_edge = weighted_img(color_edges, lines, λ=10)
-    #     print("line_edges.size",line_edge.size)
+    #
+    plt.show()
+
+    line_edge = weighted_img(image, lines, λ=10)
+    # print("line_edges.size",line_edge.size)
+
     plt.imshow(line_edge)
     plt.show()
+
 
 
 dir = os.listdir("test_images/")
