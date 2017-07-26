@@ -1,28 +1,27 @@
-from moviepy.editor import VideoFileClip
-from IPython.display import HTML
-import matplotlib.image as mpimg
-import os
+# TODO: Set weight1, weight2, and bias
+weight1 = 1.0
+weight2 = 1.0
+bias = 0.0
 
-def process_image(image):
-    # NOTE: The output you return should be a color image (3 channel) for processing video below
-    # TODO: put your pipeline here,
-    # you should return the final output (image where lines are drawn on lanes)
 
-    return image
-image = mpimg.imread("examples/laneLines_thirdPass.jpg")
-process_image(image)
-white_output = 'solidWhiteRight.mp4'
-## To speed up the testing process you may want to try your pipeline on a shorter subclip of the video
-## To do so add .subclip(start_second,end_second) to the end of the line below
-## Where start_second and end_second are integer values representing the start and end of the subclip
-## You may also uncomment the following line for a subclip of the first 5 seconds
-##clip1 = VideoFileClip("test_videos/solidWhiteRight.mp4").subclip(0,5)
-clip1 = VideoFileClip("solidWhiteRight.mp4")
-white_clip = clip1.fl_image(process_image) #NOTE: this function expects color images!!
-%time white_clip.write_videofile(white_output, audio=False)
+# DON'T CHANGE ANYTHING BELOW
+# Inputs and outputs
+test_inputs = [(0, 0), (0, 1), (1, 0), (1, 1)]
+correct_outputs = [False, False, False, True]
+outputs = []
 
-HTML("""
-<video width="960" height="540" controls>
-  <source src="{0}">
-</video>
-""".format(white_output))
+# Generate and check output
+for test_input, correct_output in zip(test_inputs, correct_outputs):
+    linear_combination = weight1 * test_input[0] + weight2 * test_input[1] + bias
+    output = int(linear_combination >1)
+    is_correct_string = 'Yes' if output == correct_output else 'No'
+    outputs.append([test_input[0], test_input[1], linear_combination, output, is_correct_string])
+
+# Print output
+num_wrong = len([output[4] for output in outputs if output[4] == 'No'])
+output_frame = pd.DataFrame(outputs, columns=['Input 1', '  Input 2', '  Linear Combination', '  Activation Output', '  Is Correct'])
+if not num_wrong:
+    print('Nice!  You got it all correct.\n')
+else:
+    print('You got {} wrong.  Keep trying!\n'.format(num_wrong))
+print(output_frame.to_string(index=False))
